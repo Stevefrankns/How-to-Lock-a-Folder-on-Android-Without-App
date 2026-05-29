@@ -1,0 +1,2205 @@
+<!-- Replace YOUR-DOMAIN.com before launch -->
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<title>How to Lock a Folder on Android Without App</title>
+<meta content="A complete guide on how to lock a folder on Android. Learn native methods, Secure Folder, and the best third-party folder lock apps for complete privacy." name="description"/>
+<style>
+
+    :root {
+      --color-bg: #0D1117;
+      --color-surface: #161B22;
+      --color-surface-2: #0F141C;
+      --color-primary-accent: #3FB950;
+      --color-secondary-accent: #58A6FF;
+      --color-warning-accent: #F0883E;
+      --color-border: #30363D;
+      --color-body-text: #C9D1D9;
+      --color-muted-text: #8B949E;
+      --color-danger: #FF6B6B;
+      --color-dark-text: #0D1117;
+      --color-white: #FFFFFF;
+
+      --font-heading: 'JetBrains Mono', monospace;
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+
+      --max-reading-width: 820px;
+      --max-wide-width: 1180px;
+      --section-padding-v: 86px;
+      --section-padding-v-mob: 52px;
+      --radius-card: 14px;
+      --radius-btn: 8px;
+      --shadow-terminal: 0 24px 70px rgba(0,0,0,0.42);
+      --transition-speed: 0.24s;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-body-text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(63,185,80,0.12), transparent 26rem),
+        radial-gradient(circle at 88% 8%, rgba(88,166,255,0.10), transparent 30rem),
+        linear-gradient(180deg, #0D1117 0%, #0B0F15 100%);
+      line-height: 1.75;
+      font-size: 17px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(201,209,217,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,209,217,0.025) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent 78%);
+      z-index: -1;
+    }
+
+    h1, h2, h3, h4, .site-name {
+      font-family: var(--font-heading);
+      color: var(--color-body-text);
+      line-height: 1.18;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--color-white);
+    }
+
+    h1::selection, h2::selection, h3::selection, p::selection, li::selection {
+      background: rgba(63,185,80,0.28);
+    }
+
+    h2 {
+      position: relative;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      font-weight: 700;
+      margin-top: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-white);
+      padding-bottom: 16px;
+    }
+
+    h2::before {
+      content: "$ ";
+      color: var(--color-primary-accent);
+      letter-spacing: 0;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary-accent), transparent);
+      opacity: 0;
+    }
+
+    section.is-loading h2::after {
+      animation: section-load 1.1s ease-out forwards;
+    }
+
+    @keyframes section-load {
+      0% { width: 0; opacity: 1; }
+      72% { width: min(100%, 560px); opacity: 1; }
+      100% { width: min(100%, 560px); opacity: 0; }
+    }
+
+    h3 {
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      font-weight: 700;
+      margin-top: 2rem;
+      color: var(--color-body-text);
+    }
+
+    h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-white);
+    }
+
+    p { margin-bottom: 1.5rem; color: var(--color-body-text); }
+
+    a {
+      color: var(--color-secondary-accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(88,166,255,0.35);
+      transition: color var(--transition-speed), border-color var(--transition-speed), background var(--transition-speed);
+    }
+
+    a:hover {
+      color: var(--color-primary-accent);
+      border-bottom-color: var(--color-primary-accent);
+    }
+
+    ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.6rem; color: var(--color-body-text); }
+
+    strong { color: var(--color-white); font-weight: 700; }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-wide-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .reading-container {
+      width: 100%;
+      max-width: var(--max-reading-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: var(--section-padding-v) 0;
+      border-bottom: 1px solid rgba(48,54,61,0.7);
+    }
+
+    .section-tint {
+      background:
+        linear-gradient(180deg, rgba(22,27,34,0.72), rgba(13,17,23,0.82)),
+        radial-gradient(circle at 80% 20%, rgba(88,166,255,0.08), transparent 24rem);
+    }
+
+    /* Header & Nav */
+    .site-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(13,17,23,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 1000;
+      transition: box-shadow var(--transition-speed), background var(--transition-speed);
+    }
+
+    .header-inner {
+      height: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: var(--max-wide-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .site-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .site-name img {
+      height: 34px !important;
+      width: 34px !important;
+      object-fit: cover;
+      border-radius: 8px !important;
+      margin-right: 10px !important;
+      box-shadow: 0 0 0 1px rgba(63,185,80,0.28), 0 0 22px rgba(63,185,80,0.12);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--color-muted-text);
+      border-bottom: 0;
+    }
+
+    .nav-link::before { content: "./"; color: var(--color-primary-accent); opacity: 0.68; }
+    .nav-link:hover { color: var(--color-primary-accent); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border-radius: var(--radius-btn);
+      font-weight: 800;
+      font-family: var(--font-code);
+      cursor: pointer;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed), background var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+      text-decoration: none;
+      border: 1.5px solid var(--color-primary-accent);
+      letter-spacing: -0.02em;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--color-primary-accent);
+      color: var(--color-primary-accent);
+    }
+
+    .btn-outline:hover {
+      background: rgba(63,185,80,0.12);
+      color: var(--color-primary-accent);
+      box-shadow: 0 0 0 4px rgba(63,185,80,0.10);
+    }
+
+    .btn-nav { padding: 8px 14px; font-size: 0.78rem; }
+
+    .btn-filled {
+      background: var(--color-primary-accent);
+      color: var(--color-dark-text);
+      border-color: var(--color-primary-accent);
+      box-shadow: 0 10px 28px rgba(63,185,80,0.18);
+    }
+
+    .btn-filled:hover {
+      background: #57D466;
+      color: var(--color-dark-text);
+      box-shadow: 0 12px 34px rgba(63,185,80,0.28);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      border-color: var(--color-primary-accent);
+      color: var(--color-primary-accent);
+    }
+
+    .btn-outline-white:hover {
+      background: rgba(63,185,80,0.12);
+      color: var(--color-primary-accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--color-primary-accent);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 132px 0 70px;
+      background:
+        radial-gradient(circle at 84% 8%, rgba(88,166,255,0.14), transparent 30rem),
+        linear-gradient(180deg, #0D1117 0%, #0B0F15 100%);
+    }
+
+    .hero .reading-container {
+      max-width: var(--max-wide-width);
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero .breadcrumb,
+    .hero h1,
+    .hero > .reading-container > p,
+    .hero .meta-bar,
+    .hero .quick-answer {
+      grid-column: 1;
+    }
+
+    .hero .extra-image,
+    .hero .hero-context-image {
+      grid-column: 2;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+    }
+
+    .hero h1::after {
+      content: " _";
+      color: var(--color-primary-accent);
+      animation: blink 1s steps(1, end) infinite;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-code);
+      font-size: 0.78rem;
+      color: var(--color-muted-text);
+      margin-bottom: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .breadcrumb a {
+      color: var(--color-muted-text);
+      border-bottom: 0;
+    }
+
+    .breadcrumb a:hover { color: var(--color-primary-accent); }
+
+    .meta-bar {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      color: var(--color-muted-text);
+      margin: 1.6rem 0 2rem;
+      padding: 14px 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .meta-bar .label { color: var(--color-secondary-accent); }
+
+    .quick-answer {
+      background: rgba(22,27,34,0.92);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-primary-accent);
+      padding: 24px;
+      border-radius: var(--radius-card);
+      margin: 2rem 0 0;
+      box-shadow: var(--shadow-terminal);
+    }
+
+    .qa-label {
+      font-family: var(--font-code);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--color-primary-accent);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .qa-label::before { content: "status: "; color: var(--color-muted-text); }
+
+    .qa-text {
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--color-body-text);
+      margin: 0;
+    }
+
+    .hero-terminal {
+      grid-column: 2;
+      grid-row: 1 / span 4;
+      align-self: start;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-terminal), 0 0 0 1px rgba(63,185,80,0.05) inset;
+      overflow: hidden;
+      min-height: 338px;
+      position: relative;
+    }
+
+    .terminal-titlebar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--color-border);
+      background: linear-gradient(180deg, #1F2630, #161B22);
+      font-family: var(--font-code);
+      font-size: 0.78rem;
+      color: var(--color-muted-text);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+
+    .terminal-dot.red { background: #FF5F56; }
+    .terminal-dot.yellow { background: #FFBD2E; }
+    .terminal-dot.green { background: #27C93F; }
+
+    .terminal-titlebar span:last-child {
+      margin-left: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hero-terminal pre {
+      min-height: 250px;
+      margin: 0;
+      padding: 26px;
+      white-space: pre-wrap;
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      color: var(--color-primary-accent);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.1em;
+      margin-left: 3px;
+      vertical-align: -0.15em;
+      background: var(--color-primary-accent);
+      animation: blink 1s steps(1, end) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-trust {
+      grid-column: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: -8px;
+    }
+
+    .trust-stat {
+      background: rgba(22,27,34,0.86);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+    }
+
+    .trust-stat strong {
+      display: block;
+      font-family: var(--font-code);
+      color: var(--color-primary-accent);
+      font-size: 1.04rem;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .trust-stat span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--color-muted-text);
+      line-height: 1.3;
+    }
+
+    .hero img {
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .hero-context-image {
+      opacity: 0.86;
+      margin-top: 0 !important;
+      max-height: 260px;
+      object-fit: cover;
+    }
+
+    /* Reading progress */
+    #progress-bar {
+      position: fixed;
+      top: 68px;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent));
+      width: 0%;
+      z-index: 999;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 18px rgba(63,185,80,0.45);
+    }
+
+    /* TOC Card */
+    .toc-card {
+      background: rgba(22,27,34,0.92);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      margin: 0;
+      box-shadow: var(--shadow-terminal);
+    }
+
+    .toc-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem !important;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+
+    .toc-list li { margin-bottom: 0.75rem; }
+
+    .toc-list a {
+      color: var(--color-body-text);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 0;
+      font-family: var(--font-code);
+      font-size: 0.92rem;
+    }
+
+    .toc-list a::before {
+      content: '>';
+      margin-right: 10px;
+      color: var(--color-primary-accent);
+      opacity: 0.85;
+      transition: transform var(--transition-speed);
+    }
+
+    .toc-list a:hover::before { transform: translateX(3px); }
+
+    /* Method Cards */
+    .method-block {
+      margin: 3rem 0;
+      background: rgba(22,27,34,0.95);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      box-shadow: var(--shadow-terminal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .method-block::before {
+      content: "android-method.sh";
+      display: block;
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      color: var(--color-muted-text);
+      border-bottom: 1px solid var(--color-border);
+      margin: -28px -28px 24px;
+      padding: 12px 18px 12px 52px;
+      background:
+        radial-gradient(circle at 18px 50%, #FF5F56 0 5px, transparent 6px),
+        radial-gradient(circle at 34px 50%, #FFBD2E 0 5px, transparent 6px),
+        radial-gradient(circle at 50px 50%, #27C93F 0 5px, transparent 6px),
+        linear-gradient(180deg, #1F2630, #161B22);
+    }
+
+    .method-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .method-header h3 {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .method-header h3::before {
+      content: "> ";
+      color: var(--color-primary-accent);
+    }
+
+    .method-badge {
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(63,185,80,0.10);
+      border: 1px solid rgba(63,185,80,0.35);
+      color: var(--color-primary-accent);
+    }
+
+    .method-badge.difficulty-easy::before { content: "████░░ EASY  "; }
+    .method-badge.difficulty-medium::before { content: "██████░░ MEDIUM  "; }
+    .method-badge:not(.difficulty-easy):not(.difficulty-medium)::before { content: "███░░  "; color: var(--color-warning-accent); }
+
+    .method-badge::before {
+      display: inline-block;
+      max-width: 0;
+      vertical-align: bottom;
+      white-space: nowrap;
+      animation: terminal-progress 1.6s steps(10, end) forwards;
+    }
+
+    @keyframes terminal-progress { to { max-width: 170px; } }
+
+    .pro-con-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin: 2rem 0;
+      background: rgba(13,17,23,0.72);
+      padding: 20px;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+    }
+
+    .pro-box, .con-box {
+      padding: 18px;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: rgba(22,27,34,0.72);
+    }
+
+    .pro-box h4 { color: var(--color-primary-accent); margin-bottom: 0.5rem; font-size: 1.02rem; }
+    .con-box h4 { color: var(--color-warning-accent); margin-bottom: 0.5rem; font-size: 1.02rem; }
+    .pro-con-grid ul { padding-left: 1.2rem; margin: 0; font-size: 0.95rem; }
+
+    /* Premium/Product Band */
+    .premium-band {
+      background:
+        linear-gradient(135deg, rgba(63,185,80,0.08), rgba(88,166,255,0.05)),
+        #0D1117;
+      color: var(--color-body-text);
+      padding: 96px 0;
+      margin: -86px 0 4rem;
+      text-align: center;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .premium-band h2 { color: var(--color-white); margin-top: 0; margin-bottom: 1rem; }
+
+    .premium-band p {
+      font-size: 1.12rem;
+      color: var(--color-muted-text);
+      max-width: 690px;
+      margin: 0 auto 3rem;
+    }
+
+    .mockup-container {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      padding: 10px;
+      max-width: 820px;
+      margin: 0 auto 2.6rem;
+      box-shadow: var(--shadow-terminal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mockup-container::before {
+      content: "";
+      display: block;
+      height: 34px;
+      margin: -10px -10px 10px;
+      border-bottom: 1px solid var(--color-border);
+      background:
+        radial-gradient(circle at 18px 17px, #FF5F56 0 5px, transparent 6px),
+        radial-gradient(circle at 36px 17px, #FFBD2E 0 5px, transparent 6px),
+        radial-gradient(circle at 54px 17px, #27C93F 0 5px, transparent 6px),
+        linear-gradient(180deg, #1F2630, #161B22);
+    }
+
+    .mockup-inner {
+      background: transparent;
+      border-radius: 10px;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-muted-text);
+      border: 0;
+    }
+
+    .mockup-inner img {
+      width: 100%;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      object-fit: contain;
+      max-height: 520px;
+    }
+
+    .feature-chips {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 2.4rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: rgba(22,27,34,0.86);
+      border: 1px solid var(--color-border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-family: var(--font-code);
+      color: var(--color-muted-text);
+    }
+
+    .chip::before { content: "# "; color: var(--color-primary-accent); }
+
+    .band-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* Feature Display */
+    .feature-group {
+      margin-bottom: 3rem;
+      background: rgba(13,17,23,0.38);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 26px;
+    }
+
+    .feature-group h3 {
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.85rem;
+      margin-bottom: 1.5rem;
+      margin-top: 0;
+    }
+
+    .feature-group h3::before { content: "# "; color: var(--color-primary-accent); }
+
+    .def-list { display: grid; gap: 1rem; }
+
+    .def-item {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 24px;
+      align-items: start;
+      background: rgba(22,27,34,0.82);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 18px;
+      transition: border-color var(--transition-speed), transform var(--transition-speed), background var(--transition-speed);
+    }
+
+    .def-item:hover {
+      border-color: rgba(63,185,80,0.55);
+      background: rgba(22,27,34,1);
+      transform: translateY(-2px);
+    }
+
+    .def-term {
+      font-weight: 700;
+      color: var(--color-white);
+      font-family: var(--font-code);
+      transition: color var(--transition-speed);
+    }
+
+    .def-item:hover .def-term { color: var(--color-primary-accent); }
+
+    .def-item:hover .def-term::before { content: "[  "; }
+    .def-item:hover .def-term::after { content: "  ]"; }
+
+    .def-desc { margin: 0; color: var(--color-body-text); }
+
+    /* Comparison Table */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 3rem 0;
+      box-shadow: var(--shadow-terminal);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--color-surface);
+      min-width: 650px;
+      font-family: var(--font-code);
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-body-text);
+    }
+
+    th {
+      font-weight: 700;
+      background: #0D1117;
+      color: var(--color-primary-accent);
+    }
+
+    .dot-fill,
+    .dot-empty {
+      display: inline-grid;
+      place-items: center;
+      width: auto;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      background: rgba(13,17,23,0.8);
+      font-family: var(--font-code);
+      font-weight: 700;
+    }
+
+    .dot-fill::before { content: "✓"; color: var(--color-primary-accent); }
+    .dot-empty::before { content: "×"; color: var(--color-danger); }
+
+    tr:last-child td { border-bottom: none; }
+
+    .verdict-row {
+      background: rgba(63,185,80,0.08);
+      font-weight: 700;
+    }
+
+    .tag-verdict {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: rgba(240,136,62,0.12);
+      color: var(--color-warning-accent);
+      border: 1px solid rgba(240,136,62,0.30);
+      font-family: var(--font-code);
+    }
+
+    .tag-winner {
+      background: rgba(63,185,80,0.12);
+      color: var(--color-primary-accent);
+      border-color: rgba(63,185,80,0.30);
+    }
+
+    /* Interactive Elements */
+    .audit-box,
+    .intent-content,
+    .callout {
+      background: rgba(22,27,34,0.92);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-primary-accent);
+      border-radius: var(--radius-card);
+      padding: 26px;
+      margin: 2rem 0;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    }
+
+    .callout-warning {
+      border-left-color: var(--color-warning-accent);
+      background: rgba(240,136,62,0.09);
+    }
+
+    .callout h4 { margin-top: 0; margin-bottom: 0.5rem; font-size: 1.02rem; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    .audit-box h3 { margin-top: 0; margin-bottom: 1.5rem; }
+
+    .audit-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      cursor: pointer;
+      padding: 11px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: rgba(13,17,23,0.52);
+    }
+
+    .audit-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 4px;
+      accent-color: var(--color-primary-accent);
+      cursor: pointer;
+    }
+
+    .audit-label { font-weight: 600; transition: color 0.2s; }
+    .audit-item.checked .audit-label { text-decoration: line-through; color: var(--color-muted-text); }
+    .audit-progress { margin-top: 1.5rem; font-family: var(--font-code); font-size: 0.9rem; font-weight: 700; color: var(--color-primary-accent); text-align: right; }
+
+    .intent-selector { margin: 2rem 0; display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .intent-btn {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      font-family: var(--font-code);
+      font-weight: 700;
+      color: var(--color-muted-text);
+      transition: all 0.2s;
+    }
+
+    .intent-btn::before { content: "> "; color: var(--color-primary-accent); }
+
+    .intent-btn.active, .intent-btn:hover {
+      background: rgba(63,185,80,0.12);
+      color: var(--color-primary-accent);
+      border-color: rgba(63,185,80,0.45);
+    }
+
+    .intent-content { display: none; margin-top: 12px; }
+    .intent-content.active { display: block; }
+
+    /* Decorative terminal output section */
+    .terminal-output-section {
+      padding: 70px 0;
+      background:
+        linear-gradient(180deg, rgba(13,17,23,0.96), rgba(22,27,34,0.94)),
+        radial-gradient(circle at 24% 0%, rgba(63,185,80,0.12), transparent 20rem);
+    }
+
+    .process-terminal {
+      max-width: var(--max-wide-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .process-window {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-terminal);
+    }
+
+    .process-window pre {
+      margin: 0;
+      padding: 28px;
+      white-space: pre-wrap;
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      line-height: 1.85;
+      color: var(--color-primary-accent);
+    }
+
+    .process-window .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: terminal-line 0.5s ease forwards;
+    }
+
+    .process-window .line:nth-child(1) { animation-delay: 0.1s; }
+    .process-window .line:nth-child(2) { animation-delay: 0.6s; }
+    .process-window .line:nth-child(3) { animation-delay: 1.1s; }
+    .process-window .line:nth-child(4) { animation-delay: 1.6s; }
+    .process-window .line:nth-child(5) { animation-delay: 2.1s; }
+    .process-window .line:nth-child(6) { animation-delay: 2.6s; }
+
+    @keyframes terminal-line {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* FAQ */
+    .faq-group { margin-bottom: 3rem; }
+
+    .faq-group h3 {
+      font-size: 1rem;
+      color: var(--color-secondary-accent);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+
+    .faq-item h4 {
+      font-family: var(--font-code);
+      font-size: 0.98rem;
+      margin: 0;
+      padding: 16px 18px;
+      cursor: pointer;
+      color: var(--color-primary-accent);
+      border-bottom: 1px solid var(--color-border);
+      user-select: none;
+    }
+
+    .faq-item h4::before { content: "$ "; color: var(--color-muted-text); }
+    .faq-item h4::after { content: " +"; color: var(--color-secondary-accent); float: right; }
+
+    .faq-item.open h4::after { content: " -"; }
+
+    .faq-item p {
+      margin: 0;
+      color: var(--color-body-text);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease, padding 0.25s ease;
+      padding: 0 18px;
+    }
+
+    .faq-item.open p {
+      max-height: 320px;
+      padding: 16px 18px 18px;
+    }
+
+    /* Accordion */
+    .accordion-item { border-bottom: 1px solid var(--color-border); margin-bottom: 0.5rem; }
+
+    .accordion-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 16px 0;
+      font-family: var(--font-code);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--color-primary-accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-btn::after { content: '+'; font-size: 1.5rem; color: var(--color-secondary-accent); transition: transform 0.2s; }
+    .accordion-btn[aria-expanded="true"]::after { transform: rotate(45deg); }
+    .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .accordion-content { padding-bottom: 16px; color: var(--color-body-text); }
+
+    /* Images */
+    .extra-image {
+      width: 100%;
+      margin: 1.75rem 0;
+      object-fit: contain;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.28);
+    }
+
+    .content-img-small {
+      width: min(100%, 520px);
+      margin: 1.5rem auto 2rem;
+      object-fit: contain;
+      background: var(--color-surface);
+    }
+
+    .product-boxshot {
+      width: min(210px, 60vw) !important;
+      max-height: 260px;
+      object-fit: contain;
+      margin: 1.4rem auto 2rem;
+      background: transparent;
+      border: 0;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.30);
+    }
+
+    .related-tool-image {
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      padding: 10px;
+      margin: 0 0 1rem;
+      background: #0D1117;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #0B0F15;
+      color: var(--color-white);
+      padding: 76px 0 40px;
+      margin-top: 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      max-width: var(--max-wide-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-col h4 { color: var(--color-white); margin-bottom: 1.5rem; font-size: 1.02rem; }
+
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 0.75rem; }
+
+    .footer-links a {
+      color: var(--color-muted-text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      border-bottom: 0;
+      font-family: var(--font-code);
+    }
+
+    .footer-links a:hover { color: var(--color-primary-accent); }
+
+    .footer-bottom {
+      max-width: var(--max-wide-width);
+      margin: 40px auto 0;
+      padding: 24px 24px 0;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.85rem;
+      color: var(--color-muted-text);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-bottom p { color: var(--color-muted-text); margin: 0; }
+
+    @media (max-width: 980px) {
+      .hero .reading-container {
+        grid-template-columns: 1fr;
+      }
+      .hero .breadcrumb,
+      .hero h1,
+      .hero > .reading-container > p,
+      .hero .meta-bar,
+      .hero .quick-answer,
+      .hero .extra-image,
+      .hero .hero-terminal,
+      .hero .hero-trust {
+        grid-column: 1;
+        grid-row: auto;
+      }
+      .hero-context-image {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { font-size: 16px; }
+      .header-inner { padding: 0 16px; height: 64px; }
+      #progress-bar { top: 64px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        background: #0D1117;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px;
+        box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .nav-links.active { display: flex; }
+      .menu-toggle { display: block; }
+      .btn-nav { display: none; }
+
+      .hero { padding-top: 108px; }
+      .hero-terminal { min-height: 286px; }
+      .hero-terminal pre { font-size: 0.82rem; padding: 18px; }
+      .hero-trust { grid-template-columns: 1fr; }
+
+      .pro-con-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .def-item { grid-template-columns: 1fr; gap: 8px; }
+      .premium-band { padding: 64px 0; }
+      .band-ctas { flex-direction: column; }
+      .btn { width: 100%; }
+      section { padding: var(--section-padding-v-mob) 0; }
+      h1 { font-size: 32px; }
+      h2 { letter-spacing: 1.4px; }
+      h1, h2, h3, .site-name, .nav-link, .btn, .chip, table, .method-badge, .toc-list a, .hero-terminal pre {
+        font-size-adjust: none;
+      }
+    }
+
+    @media (hover: none) {
+      .def-item:hover .def-term::before,
+      .def-item:hover .def-term::after {
+        content: "";
+      }
+      .def-item:hover {
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+
+
+    /* Visual correction patch: custom security mark, title spacing, table contrast */
+    .custom-security-mark {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      margin-right: 12px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, rgba(88,166,255,0.22), transparent 42%), #0D1117;
+      box-shadow: 0 0 0 1px rgba(63,185,80,0.34), 0 0 24px rgba(63,185,80,0.16);
+      overflow: hidden;
+    }
+
+    .custom-security-mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .brand-title {
+      display: inline-block;
+      letter-spacing: 0.045em;
+      word-spacing: 0.12em;
+      line-height: 1.05;
+      white-space: nowrap;
+      font-kerning: normal;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1 {
+      letter-spacing: -0.012em;
+      word-spacing: 0.08em;
+      line-height: 1.16;
+    }
+
+    h2 {
+      letter-spacing: 1.35px;
+      word-spacing: 0.16em;
+      line-height: 1.24;
+    }
+
+    h3, h4 {
+      word-spacing: 0.08em;
+      line-height: 1.32;
+    }
+
+    .table-wrapper {
+      background: #060A10;
+      border-color: rgba(88,166,255,0.36);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+
+    table {
+      background: #0B1220;
+      color: #E6EDF3;
+    }
+
+    thead tr, th {
+      background: #101B2D !important;
+      color: #7EE787 !important;
+      border-bottom: 1px solid rgba(126,231,135,0.38) !important;
+    }
+
+    tbody tr:nth-child(odd) { background: #0E1726; }
+    tbody tr:nth-child(even) { background: #101A2A; }
+    tbody tr:hover { background: #132238; }
+
+    td {
+      color: #E6EDF3 !important;
+      border-bottom-color: rgba(139,148,158,0.24) !important;
+    }
+
+    .verdict-row {
+      background: rgba(63,185,80,0.16) !important;
+    }
+
+    .verdict-row td {
+      color: #F0F6FC !important;
+      font-weight: 800;
+    }
+
+    .dot-fill,
+    .dot-empty {
+      background: #050A12;
+      border-color: rgba(201,209,217,0.35);
+    }
+
+    .tag-verdict {
+      background: rgba(240,136,62,0.20);
+      color: #FFD8A8;
+      border-color: rgba(240,136,62,0.55);
+    }
+
+    .tag-winner {
+      background: rgba(63,185,80,0.20);
+      color: #7EE787;
+      border-color: rgba(126,231,135,0.55);
+    }
+
+    @media (max-width: 768px) {
+      .custom-security-mark {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        margin-right: 10px;
+      }
+      .brand-title { letter-spacing: 0.025em; }
+      h1 { word-spacing: 0.04em; }
+      h2 { letter-spacing: 1px; word-spacing: 0.10em; }
+    }
+</style>
+</head>
+<body>
+<!-- SIGNATURE_DETAIL: Reading Progress Bar -->
+<div id="progress-bar"></div>
+<header class="site-header">
+<div class="header-inner">
+<div class="site-name" style="display: flex; align-items: center;">
+<span aria-label="Security-themed shield and lock graphic" class="custom-security-mark" role="img">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="shieldGlow" x1="8" x2="56" y1="6" y2="58">
+<stop offset="0" stop-color="#58A6FF"></stop>
+<stop offset="0.52" stop-color="#3FB950"></stop>
+<stop offset="1" stop-color="#0D1117"></stop>
+</lineargradient>
+<filter height="180%" id="softGlow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="blur" stddeviation="2.4"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<rect fill="#0D1117" height="60" rx="14" width="60" x="2" y="2"></rect>
+<path d="M32 8L50 15V29C50 43 41.8 53.2 32 57C22.2 53.2 14 43 14 29V15L32 8Z" fill="url(#shieldGlow)" filter="url(#softGlow)" opacity="0.95"></path>
+<path d="M32 13.2L45.5 18.5V29.3C45.5 39.7 39.6 47.2 32 50.8C24.4 47.2 18.5 39.7 18.5 29.3V18.5L32 13.2Z" fill="#101821" stroke="#C9D1D9" stroke-opacity="0.22"></path>
+<path d="M25 30V26.6C25 22.7 28.1 19.6 32 19.6C35.9 19.6 39 22.7 39 26.6V30" fill="none" stroke="#3FB950" stroke-linecap="round" stroke-width="3"></path>
+<rect fill="#0D1117" height="15" rx="4" stroke="#58A6FF" stroke-width="2" width="18" x="23" y="29"></rect>
+<circle cx="32" cy="36" fill="#3FB950" r="2"></circle>
+<path d="M32 38V41" stroke="#3FB950" stroke-linecap="round" stroke-width="2"></path>
+<path d="M12 44H20M44 20H52M11 24H17M47 42H55" stroke="#58A6FF" stroke-linecap="round" stroke-opacity="0.55" stroke-width="2"></path>
+</svg>
+</span>
+        <span class="brand-title">AndroidFolderPrivacy</span>
+      </div>
+<button aria-label="Toggle navigation" class="menu-toggle">☰</button>
+<nav class="nav-links">
+<a class="nav-link" href="#overview">Overview</a>
+<a class="nav-link" href="#methods">Native Methods</a>
+<a class="nav-link" href="#apps">Best Apps</a>
+<a class="nav-link" href="#comparison">Comparison</a>
+<a class="nav-link" href="#troubleshooting">Troubleshoot</a>
+<a class="nav-link" href="#faq">FAQ</a>
+</nav>
+<a class="btn btn-outline btn-nav" href="#recommendation">See Our Top Pick →</a>
+</div>
+</header>
+<main>
+<!-- S1: HERO (Editorial Layout) -->
+<section class="hero">
+<div class="reading-container">
+<div class="breadcrumb">
+<a href="/">Home</a> / Privacy Guides / Android
+        </div>
+<h1>How to Lock a Folder on Android Without App</h1>
+<p>Your phone holds your life. Photos, financial documents, and private files sit exposed if you only rely on a screen lock. This guide covers exactly how to lock a folder in Android using built-in settings, secure features like Samsung Knox, and when to escalate to dedicated privacy software.</p><div aria-label="Animated terminal showing file protection process" class="hero-terminal"><div class="terminal-titlebar"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span>android-folder-privacy://secure-vault</span></div><pre id="hero-terminal-output"></pre></div><div aria-label="Live protection stats" class="hero-trust"><div class="trust-stat"><strong id="files-counter">184920</strong><span>Files protected</span></div><div class="trust-stat"><strong id="vault-status">ACTIVE</strong><span>Vault status</span></div><div class="trust-stat"><strong id="scan-status">0 threats</strong><span>Last scan</span></div></div>
+<img alt="Android theft protection and securing folders against unauthorized access" class="extra-image hero-context-image" src="https://i.ibb.co/XksgQVXw/android-theft-protection.jpg" style="margin-top: 1.5rem; width: 100%;"/>
+<div class="meta-bar">
+<span><span class="label">Editorial Team</span></span>
+<span>·</span>
+<span>May 2026</span>
+<span>·</span>
+<span>12 min read</span>
+</div>
+<div class="quick-answer">
+<span class="qa-label">Quick Answer</span>
+<p class="qa-text">To lock a folder on Android without downloading a third-party app, use the built-in <strong>Files by Google</strong> app. Open it, navigate to the "Collections" section, and select <strong>Safe Folder</strong>. Set a PIN or pattern, and move any sensitive files into this folder. Samsung users should use the built-in <strong>Secure Folder</strong> feature found in Biometrics and Security settings.</p>
+</div>
+</div>
+</section>
+<!-- S2: TABLE OF CONTENTS -->
+<section class="section-tint" id="toc">
+<div class="reading-container">
+<div class="toc-card">
+<h2 class="toc-title" style="margin-top: 0; font-size: 1.25rem;">In This Guide</h2>
+<ul class="toc-list">
+<li><a href="#overview">Understanding Android Folder Privacy</a></li>
+<li><a href="#methods">Method 1: Google Safe Folder (Native)</a></li>
+<li><a href="#samsung">Method 2: Samsung Secure Folder</a></li>
+<li><a href="#recommendation">The Tool We Recommend for Most Users</a></li>
+<li><a href="#comparison">Methods Comparison</a></li>
+<li><a href="#troubleshooting">Troubleshooting &amp; Recovery</a></li>
+<li><a href="#faq">Frequently Asked Questions</a></li>
+</ul>
+</div>
+</div>
+</section>
+<!-- S3: DIRECT ANSWER AND OVERVIEW -->
+<section id="overview">
+<div class="reading-container">
+<h2>What You Need to Know Before Locking Folders</h2>
+<p>When you ask "how to lock a folder on Android," you are usually looking to solve one of two problems: hiding sensitive photos from a friend borrowing your phone, or securing financial documents against device theft. Android's open file system makes it easy to move files around, but historically lacked a universal, native "right-click and lock" feature like Windows.</p>
+<p>Today, Android offers fragmentation. If you have a Samsung, you have one set of excellent built-in tools. If you use a Pixel or Motorola, you rely on Google's file manager. If you need complete control—like locking entire app folders, maintaining access after a restart, or syncing encrypted folders to a PC—you need a third-party application.</p>
+<div class="callout">
+<h4>Scope of This Guide</h4>
+<p>This guide is specifically for <strong>Android devices only</strong>. We will cover how to lock a folder in Android mobile natively, how to lock a gallery folder, and how biometric app locking works. We will not cover iOS, Windows, or Mac methods here.</p>
+</div>
+<!-- Interactive Element: Search Intent Selector -->
+<h3>What are you trying to do today?</h3>
+<p>Select your goal to jump to the right advice:</p>
+<div class="intent-selector">
+<button class="intent-btn active" data-target="intent-setup">Set up a new lock</button>
+<button class="intent-btn" data-target="intent-recover">Recover a locked folder</button>
+<button class="intent-btn" data-target="intent-compare">Compare methods</button>
+</div>
+<div class="intent-content active" id="intent-setup">
+<p>If you just need basic photo hiding, jump to the <strong>Google Safe Folder</strong> section. If you need heavy-duty <a href="https://psbios.com/file-encryption-explained/" rel="noopener noreferrer" target="_blank">file encryption</a> that survives phone restarts, look at the <strong>Third-Party Apps</strong> section.</p>
+<a class="btn btn-outline btn-nav" href="#methods">Go to Setup Methods</a>
+</div>
+<div class="intent-content" id="intent-recover">
+<p>Forgot your PIN? Locked out of your own files? Jump straight to our troubleshooting and recovery guide. <em>Note: Native Android secure folders cannot be recovered if you lose the PIN.</em></p>
+<a class="btn btn-outline btn-nav" href="#troubleshooting">Go to Recovery Guide</a>
+</div>
+<div class="intent-content" id="intent-compare">
+<p>Not sure if you should use Samsung Secure Folder, Google Files, or a dedicated app? View our side-by-side comparison matrix.</p>
+<a class="btn btn-outline btn-nav" href="#comparison">Go to Comparison</a>
+</div>
+</div>
+</section><section aria-hidden="true" class="terminal-output-section"><div class="process-terminal"><div class="process-window"><div class="terminal-titlebar"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span>protection-process.log</span></div><pre><span class="line">&gt; initializing secure folder session</span>
+<span class="line">&gt; scanning documents, photos, vault entries</span>
+<span class="line">&gt; applying local encryption layer</span>
+<span class="line">&gt; isolating private files from gallery access</span>
+<span class="line">&gt; verifying app lock and recovery settings</span>
+<span class="line">&gt; protection complete: vault is ready</span>
+</pre></div></div></section>
+<!-- S4: COMPLETE METHODS GUIDE (Layer 1) -->
+<section class="section-tint" id="methods">
+<div class="reading-container">
+<h2>How to Lock a Folder on Android (No App Needed)</h2>
+<p>If you prefer not to download additional software, you can use the tools already built into your Android device. Be aware that these methods are tied directly to your device—if you switch phones, the locked files do not automatically transfer in a locked state.</p>
+<div class="method-block">
+<div class="method-header">
+<h3>Method 1: Files by Google (Safe Folder)</h3>
+<span class="method-badge difficulty-easy">Difficulty: Easy</span>
+<span class="method-badge">Cost: Free</span>
+</div>
+<p>Almost all modern Android phones (Pixels, Motorola, Nokia) come with "Files by Google" pre-installed as the default file manager. It includes a feature called Safe Folder.</p>
+<ol>
+<li>Open the <strong>Files by Google</strong> app.</li>
+<li>Scroll down to the "Collections" section and tap <strong>Safe folder</strong>.</li>
+<li>Choose either a PIN or Pattern lock. (You must remember this—there is no recovery email option).</li>
+<li>Confirm your PIN/Pattern.</li>
+<li>Navigate to any file or folder in the app, tap the three dots next to it, and select <strong>Move to Safe folder</strong>.</li>
+</ol>
+<img alt="Android security settings menu showing files and folder privacy options" class="extra-image" src="https://i.ibb.co/9HF3sZXG/android-security-settings.jpg" style="margin: 1.5rem 0; width: 100%;"/>
+<div class="pro-con-grid">
+<div class="pro-box">
+<h4>What it's best for</h4>
+<ul>
+<li>Hiding specific photos or PDFs quickly</li>
+<li>Users who don't want to install extra apps</li>
+<li>Basic privacy from nosy friends</li>
+</ul>
+</div>
+<div class="con-box">
+<h4>Limitations</h4>
+<ul>
+<li>Cannot lock entire app folders, only files</li>
+<li><strong>No password recovery:</strong> If you forget the PIN, the files are gone permanently.</li>
+<li>Uninstalling the Files app deletes the Safe folder contents.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="method-block" id="samsung">
+<div class="method-header">
+<h3>Method 2: Samsung Secure Folder</h3>
+<span class="method-badge difficulty-medium">Difficulty: Medium</span>
+<span class="method-badge">Cost: Free (Samsung Only)</span>
+</div>
+<p>If you own a Samsung Galaxy device, you have access to one of the best native security features on any platform: the Secure Folder, backed by hardware-level Knox encryption. This operates like a completely separate phone within your phone.</p>
+<ol>
+<li>Go to <strong>Settings</strong> &gt; <strong>Biometrics and security</strong>.</li>
+<li>Tap <strong>Secure Folder</strong>.</li>
+<li>Sign in with your Samsung account and agree to terms.</li>
+<li>Choose your lock method (Pattern, PIN, Password, or Biometrics).</li>
+<li>Once set up, open the Secure Folder app from your app drawer. You can add files or even install separate, locked copies of apps (like a second WhatsApp).</li>
+</ol>
+<img alt="Protecting sensitive personal data with secure folder isolation on a smartphone" class="extra-image" src="https://i.ibb.co/Zpt5NfpT/sensitive-personal-data.jpg" style="margin: 1.5rem 0; width: 100%;"/>
+<div class="callout callout-warning">
+<h4>Note on Biometrics</h4>
+<p>If your phone restarts, biometric app locking usually requires the master PIN or Pattern on the first unlock before fingerprints work again. This is standard Android security architecture.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- S5: WHY RECOMMEND (Layer 2) + PREMIUM SAAS MOMENT -->
+<section id="recommendation">
+<!-- Premium SaaS Moment Band placed here as the transition to product awareness -->
+<div class="premium-band">
+<div class="container">
+<h2>The Tool We Recommend for Most Users</h2>
+<p>While native Android tools are good for basic hiding, they fail if you need to lock specific apps, encrypt files on an SD card, or sync protected folders to a PC. For comprehensive mobile privacy, we recommend Folder Lock.</p>
+<div class="mockup-container">
+<div class="mockup-inner" style="background: transparent; border: none; height: auto;">
+<img alt="Folder Lock Dashboard Interface showing secure data vault status and features" class="extra-image" src="https://i.ibb.co/Y4PCmGNW/Data-Vault-Analogy.jpg" style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"/>
+</div>
+</div>
+<div class="feature-chips">
+<span class="chip">App Locking (PIN/Bio)</span>
+<span class="chip">AES 256-bit File Encryption</span>
+<span class="chip">Intruder Tracking</span>
+<span class="chip">Secure Cloud Sync</span>
+</div>
+<div class="band-ctas">
+<a class="btn btn-filled" href="https://play.google.com/store/apps/details?id=com.newsoftwares.folderlock_v1&amp;hl=en_IN" rel="noopener noreferrer" target="_blank">Try Folder Lock Free →</a>
+<a class="btn btn-outline-white" href="https://store.newsoftwares.net/?add=fl" rel="noopener noreferrer" target="_blank">View Full Version Pricing →</a>
+</div>
+</div>
+</div>
+<div class="reading-container">
+<p>We test dozens of mobile privacy tools. Of all the options we covered, here is why we recommend <a href="https://cloudstorageinfo.org/folder-lock-review" rel="noopener noreferrer" target="_blank">Folder Lock</a> for Android users who need more than just a hidden photo gallery. Trusted by over 100 million users worldwide, it provides a comprehensive privacy shield.</p>
+<p>Built-in tools like Google Safe Folder are isolated. They don't protect your banking apps, they can't lock a folder in an SD card reliably across device changes, and if you forget your PIN, your data is nuked. Folder Lock acts as a complete privacy suite. It not only creates an encrypted vault for your files and photos, but it also includes an <a href="https://play.google.com/store/apps/details?id=com.newsoftwares.folderlock_v1&amp;hl=en_IN" rel="noopener noreferrer" target="_blank">App Locker</a> to password-protect individual applications (like WhatsApp or your banking app) so they cannot be opened even if your phone is unlocked.</p>
+<p><strong>Honest limitations:</strong> Folder Lock is a robust app, which means it uses some background battery to monitor app launches for the App Locker feature. If you use a very old budget Android phone, you might notice slight battery drain compared to native methods.</p>
+</div>
+</section>
+<!-- S7: CORE FEATURES (V8 - Category grouped) -->
+<section class="section-tint" id="features">
+<div class="reading-container">
+<h2>What You Can Do With Dedicated Folder Lock Software</h2>
+<p>When you move past built-in OS limitations, <a href="https://www.softwaretestinghelp.com/folder-lock-software/" rel="noopener noreferrer" target="_blank">third-party folder lock apps</a> offer a much wider range of privacy controls.</p>
+<div class="feature-group">
+<h3>File &amp; Media Protection</h3>
+<div class="def-list">
+<div class="def-item">
+<span class="def-term">Photo &amp; Video Vault</span>
+<p class="def-desc">Hide and encrypt images directly from the gallery. They disappear from the public gallery and require a PIN to view.</p>
+</div>
+<div class="def-item">
+<span class="def-term">SD Card Support</span>
+<p class="def-desc">Lock folders in an SD card on Android. Unlike native tools, encrypted files remain secure even if the SD card is removed and inserted into a PC.</p>
+</div>
+</div>
+</div>
+<div class="feature-group">
+<h3>App Level Security</h3>
+<img alt="Locking individual apps like WhatsApp or messaging with a secure PIN on Android" class="extra-image" src="https://i.ibb.co/MkHzrhSF/lock-whatsapp-apps.jpg" style="margin-bottom: 1.5rem; width: 100%;"/>
+<div class="def-list">
+<div class="def-item">
+<span class="def-term">App Locker</span>
+<p class="def-desc">Lock individual apps (like Gmail, messaging, or financial apps) without locking the whole phone. Supports PIN, Pattern, or Fingerprint.</p>
+</div>
+<div class="def-item">
+<span class="def-term">Fake Login / Decoy</span>
+<p class="def-desc">Set up a secondary PIN that opens a fake, empty vault if someone forces you to open the app.</p>
+</div>
+</div>
+</div>
+<div class="feature-group">
+<h3>Digital Identity &amp; Cloud Protection</h3>
+<div class="def-list">
+<div class="def-item">
+<span class="def-term">Secure Digital Wallets</span>
+<div class="def-desc">
+<p style="margin: 0;">Beyond media, the app provides dedicated vaults for your financial life. You can securely tuck away credit card numbers, bank account routing details, and personal IDs.</p>
+<img alt="Securing private wallets and financial information on a mobile device" class="extra-image" src="https://i.ibb.co/zDhHDzm/Securing-Private-Wallets.jpg" style="margin-top: 1rem; width: 100%;"/>
+</div>
+</div>
+<div class="def-item">
+<span class="def-term">Hack Attempt Monitoring</span>
+<div class="def-desc">
+<p style="margin: 0;">If someone tries to guess your master PIN, the software silently logs the failed attempt. You get a clear record of who tried to breach your privacy and when.</p>
+<img alt="Audit trail data logging for hack attempt monitoring on a smartphone" class="extra-image" src="https://i.ibb.co/W4JBsgpd/audit-trail-data-logging.jpg" style="margin-top: 1rem; width: 100%;"/>
+</div>
+</div>
+<div class="def-item">
+<span class="def-term">Encrypted Cloud Sync</span>
+<div class="def-desc">
+<p style="margin: 0;">Link your secure vault directly to your existing Google Drive, OneDrive, or Dropbox accounts. Your data is encrypted locally on your Android device before it ever reaches the cloud.</p>
+<img alt="Encrypted cloud sync securing files seamlessly over Google Drive and Dropbox" class="extra-image" src="https://i.ibb.co/ks87GMGG/Secured-Cloud.jpg" style="margin-top: 1rem; width: 100%;"/>
+</div>
+</div>
+<div class="def-item">
+<span class="def-term">Secure Browser &amp; Notes</span>
+<div class="def-desc">
+<p style="margin: 0;">Write private notes and browse the web without leaving a trace on your device. The integrated secure browser automatically clears all history, cookies, and cache the moment you exit.</p>
+<img alt="Encrypted secure notes vault holding confidential documents and private text" class="extra-image" src="https://i.ibb.co/LddRBVjR/Encrypted-Secure-Notes.jpg" style="margin-top: 1rem; width: 100%;"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- S12: FREE VS FULL VERSION COMPARISON -->
+<section id="pricing">
+<div class="reading-container">
+<h2>Folder Lock Pricing: What You Get</h2>
+<p>You can download and start using the app for free, which works perfectly for basic mobile privacy. However, power users who need cross-device access might want to consider the premium upgrade.</p><img alt="Folder Lock 10 product boxshot for secure file and folder protection" class="product-boxshot" src="https://i.ibb.co/ksHyHDQV/folder-lock-10-pro-boxshot.png"/>
+<div class="pro-con-grid" style="margin-top: 2rem;">
+<div class="pro-box">
+<h4>Free Version</h4>
+<ul>
+<li>1GB of secure storage capacity</li>
+<li>Sync data across up to 2 devices</li>
+<li>Core photo, video, and file locking</li>
+<li>Basic app locking functionality</li>
+</ul>
+<div style="margin-top: 1.5rem;">
+<a class="btn btn-outline" href="https://play.google.com/store/apps/details?id=com.newsoftwares.folderlock_v1&amp;hl=en_IN" rel="noopener noreferrer" target="_blank">Download Free Version →</a>
+</div>
+</div>
+<div class="con-box" style="background-color: var(--color-premium-band); border-radius: var(--radius-card); padding: 24px; margin: -24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+<h4 style="color: var(--color-white); margin-top: 0;">Pro Version ($39.95)</h4>
+<ul style="color: #a0aca5;">
+<li><strong>Unlimited</strong> secure storage capacity</li>
+<li>Sync data across up to <strong>5 devices</strong></li>
+<li>Cross-platform support (Windows, Mac, iOS, Android)</li>
+<li>Advanced security features and priority support</li>
+</ul>
+<div style="margin-top: 1.5rem;">
+<a class="btn btn-filled" href="https://store.newsoftwares.net/?add=fl" rel="noopener noreferrer" style="background: var(--color-primary-accent); color: white; border: none;" target="_blank">View Full Version Pricing →</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- S8/S11: METHODS COMPARISON TABLE (V4 - Dot Matrix) -->
+<section class="section-tint" id="comparison">
+<div class="reading-container">
+<h2>Android Folder Lock Methods Compared</h2>
+<p>A quick reference to help you decide which privacy method fits your needs.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Google Safe Folder</th>
+<th>Samsung Secure Folder</th>
+<th>Folder Lock App</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hide Photos/Videos</td>
+<td><span class="dot-fill"></span></td>
+<td><span class="dot-fill"></span></td>
+<td><span class="dot-fill"></span></td>
+</tr>
+<tr>
+<td>Lock Individual Apps</td>
+<td><span class="dot-empty"></span></td>
+<td><span class="dot-fill"></span></td>
+<td><span class="dot-fill"></span></td>
+</tr>
+<tr>
+<td>Password Recovery Option</td>
+<td><span class="dot-empty"></span></td>
+<td><span class="dot-fill"></span></td>
+<td><span class="dot-fill"></span></td>
+</tr>
+<tr>
+<td>Lock Folders on SD Card</td>
+<td><span class="dot-empty"></span></td>
+<td><span class="dot-empty"></span></td>
+<td><span class="dot-fill"></span></td>
+</tr>
+<tr>
+<td>Cross-Device Cloud Sync</td>
+<td><span class="dot-empty"></span></td>
+<td><span class="dot-fill"></span> (Samsung cloud)</td>
+<td><span class="dot-fill"></span> (Any cloud)</td>
+</tr>
+<tr class="verdict-row">
+<td><strong>Best For</strong></td>
+<td>Basic temporary hiding</td>
+<td>Samsung loyalists</td>
+<td>Complete privacy &amp; app locking</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Interactive Element: Audit Checklist -->
+<section id="privacy-audit-section">
+<div class="reading-container">
+<h2>Mobile Privacy Settings Audit Checklist</h2>
+<p>Before installing any folder lock app, ensure your baseline Android security is solid. Use this checklist to audit your device.</p>
+<div class="audit-box" id="privacy-audit">
+<h3>Your Privacy Score: <span class="audit-progress" id="audit-score">0/5 Completed</span></h3>
+<div class="audit-item" onclick="toggleAudit(this)">
+<input tabindex="-1" type="checkbox"/>
+<span class="audit-label">Screen lock is set to a complex PIN or biometric (not a simple pattern).</span>
+</div>
+<div class="audit-item" onclick="toggleAudit(this)">
+<input tabindex="-1" type="checkbox"/>
+<span class="audit-label">Notifications on lock screen are set to "Hide sensitive content".</span>
+</div>
+<div class="audit-item" onclick="toggleAudit(this)">
+<input tabindex="-1" type="checkbox"/>
+<span class="audit-label">Google Play Protect is enabled in settings.</span>
+</div>
+<div class="audit-item" onclick="toggleAudit(this)">
+<input tabindex="-1" type="checkbox"/>
+<span class="audit-label">"Install from unknown sources" is disabled for all browsers.</span>
+</div>
+<div class="audit-item" onclick="toggleAudit(this)">
+<input tabindex="-1" type="checkbox"/>
+<span class="audit-label">Banking and financial apps are secured behind a secondary app lock.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- S14: DEEP DIVE SECTIONS -->
+<section id="deep-dive-1">
+<div class="reading-container">
+<h2>Biometric vs PIN App Locking — Pros and Cons</h2>
+<p>When you set up an app locker or secure folder on Android, you must choose how to unlock it. How app locking interacts with biometrics on different devices dictates your real-world security.</p>
+<h3>Biometric Unlocking (Fingerprint/Face)</h3>
+<p>The fastest and most convenient method. However, biometric spoofing risks exist (though rare). The bigger risk is legal and physical: in many jurisdictions, law enforcement or border control can compel you to unlock a phone with your fingerprint, but cannot legally force you to divulge a PIN. Additionally, a sleeping or incapacitated person can have their fingerprint used against them.</p>
+<h3>PIN or Password Unlocking</h3>
+<p>A strong PIN (6+ digits, not a birthdate) or password is the gold standard for security. It is immune to physical coercion if you simply refuse to provide it. However, it is susceptible to "shoulder surfing" in public places.</p>
+<p><strong>The Verdict:</strong> Use biometrics for convenience on daily apps (like WhatsApp), but use a complex PIN for financial apps and your core file vault. The best apps for how to lock a folder on Android allow you to separate these credentials.</p>
+<img alt="Comparing biometric fingerprint unlocking versus secure PIN pattern for Android lock screen security" class="extra-image" src="https://i.ibb.co/xtZC7X09/lock-screen-security.jpg" style="margin-top: 1.5rem; width: 100%;"/>
+</div>
+</section>
+<!-- S16: TROUBLESHOOTING GUIDE -->
+<section class="section-tint" id="troubleshooting">
+<div class="reading-container">
+<h2>Troubleshooting &amp; Folder Lock Recovery</h2>
+<p>Getting locked out of your own files is a stressful experience. Here is owner-safe recovery guidance for common Android folder lock issues.</p>
+<h3>Forgot your Folder Lock password? Here is how to recover access</h3>
+<img alt="Recovering a forgotten Android pattern or PIN for a locked folder application" class="extra-image" src="https://i.ibb.co/7tBk10rd/android-pattern-pin-recovery.jpg" style="margin-bottom: 1.5rem; width: 100%;"/>
+<p>If you are using a third-party application like Folder Lock and forgot your master PIN, do not panic and do not uninstall the app yet (which might delete the data depending on settings).</p>
+<ol>
+<li>Look for a "Forgot Password" or "?" icon on the lock screen of the app.</li>
+<li>Enter the recovery email address you established during the initial setup.</li>
+<li>Check your email for a reset link or temporary PIN.</li>
+<li>If you never set a recovery email, contact the vendor's support team with proof of purchase or account ownership.</li>
+</ol>
+<h3>How to reset your Secure Folder lock (Samsung)</h3>
+<p>If you forget your Samsung Secure Folder PIN, you can reset it if you linked your Samsung account.</p>
+<ol>
+<li>Open Secure Folder and enter an incorrect PIN.</li>
+<li>Tap "Forgot PIN" at the bottom of the screen.</li>
+<li>Sign in to your Samsung Account.</li>
+<li>You will be prompted to set a new lock type and PIN.</li>
+</ol>
+<div class="callout callout-warning">
+<h4>Warning on Google Safe Folder</h4>
+<p>If you forget the PIN for Google's "Safe folder" in the Files app, <strong>the data cannot be recovered</strong>. Google intentionally does not provide a backdoor. Do not clear the app data or uninstall it, as this will permanently delete the files inside.</p>
+</div>
+<h3>App lock behavior after phone restart</h3>
+<p>A common question is: "Can someone bypass app lock by restarting the phone?" Properly designed app lockers start a background service immediately upon device boot. However, Android requires the master device PIN to be entered once after a reboot before biometric sensors are activated. Therefore, your app locks will require their backup PIN/Pattern until the device is fully unlocked the first time.</p>
+</div>
+</section>
+<!-- S20: FAQ -->
+<section id="faq">
+<div class="reading-container">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-group">
+<h3>Native Android Features</h3>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">Can you lock a folder on Android without an app?</h4>
+<p>Yes. You can use the "Safe folder" feature within the pre-installed Files by Google app, or the "Secure Folder" feature built into Samsung Galaxy devices. These require no additional downloads.</p>
+</div>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">Is Secure Folder different from folder lock on Android?</h4>
+<p>Yes. Samsung's Secure Folder is a hardware-backed encrypted environment that acts like a separate phone partition. You can install completely separate instances of apps inside it. A standard folder lock generally just encrypts and hides specific files within your existing file system.</p>
+</div>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">How to lock a gallery folder on Android?</h4>
+<p>In Google Photos, you can select images, tap the three dots, and choose "Move to Locked Folder." Note that these photos will not be backed up to the cloud automatically and will be lost if you uninstall the Photos app or clear its data.</p>
+</div>
+</div>
+<div class="faq-group">
+<h3>Advanced Protection &amp; Recovery</h3>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">Can I lock a folder on Android SD card?</h4>
+<p>Native tools like Google Safe Folder struggle with external SD cards. To reliably lock a folder in an SD card in Android so that it remains encrypted even if removed, you should use dedicated third-party folder lock software.</p>
+</div>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">What is the best free app lock for Android?</h4>
+<p>The best free app lock is usually the one built into your phone's OS, if available. For third-party options, look for apps that offer basic PIN locking without excessive ads. For robust security, paid tools or premium versions of apps like Folder Lock are recommended to avoid data-harvesting free apps.</p>
+</div>
+<div class="faq-item open">
+<h4 aria-expanded="true" role="button" tabindex="0">How to find folder lock files?</h4>
+<p>If files were hidden by an app, they are usually stored in a hidden directory (starting with a period, e.g., ".folderlock") and are encrypted. You cannot view them via a standard file manager; you must unlock them through the app that originally locked them.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- S19: RELATED PRODUCTS -->
+<section class="section-tint" id="related-tools">
+<div class="reading-container">
+<h2>Other Security Tools You Might Find Useful</h2>
+<p>These tools are developed by <a href="https://newsoftwares.net/" rel="noopener noreferrer" target="_blank">NewSoftwares.net</a>, the same team behind Folder Lock, offering specialized security for different use cases.</p>
+<div class="pro-con-grid" style="grid-template-columns: 1fr; gap: 16px;">
+<div style="padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-card);">
+<h4 style="margin:0 0 8px;">USB Secure</h4><img alt="USB Secure product screenshot for portable password protection on USB drives" class="related-tool-image" src="https://i.ibb.co/dJX03kDG/usb-secure-product-box-screenshot.jpg"/>
+<p style="margin:0; font-size: 0.95rem; color: var(--color-meta-text);">Portable password protection for USB drives. Works entirely from the drive without requiring installation on the host PC.</p>
+</div>
+<div style="padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-card);">
+<h4 style="margin:0 0 8px;">Folder Protect</h4><img alt="Folder Protect for Windows security software interface for preventing file changes" class="related-tool-image" src="https://i.ibb.co/RTVcfd3m/folder-protect-for-windows.jpg"/>
+<p style="margin:0; font-size: 0.95rem; color: var(--color-meta-text);">Advanced endpoint security that can prevent files from being deleted or modified, even if they can be viewed.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- S22: FINAL VERDICT (Layer 3) -->
+<section id="verdict">
+<div class="reading-container">
+<h2>Our Verdict</h2>
+<p>If you simply need to hide a few photos from a friend borrowing your phone, Android's built-in <strong>Files by Google (Safe Folder)</strong> is fast, free, and sufficient. Samsung users should absolutely utilize their built-in <strong>Secure Folder</strong>.</p>
+<p>However, if you want comprehensive privacy—meaning you want to lock individual apps, encrypt folders on an SD card, sync protected files across devices, and have a safe password recovery option—native tools fall short. For complete mobile security, we recommend using dedicated software.</p>
+<div style="margin-top: 2rem; display: flex; gap: 16px; flex-wrap: wrap;">
+<a class="btn btn-filled" href="https://play.google.com/store/apps/details?id=com.newsoftwares.folderlock_v1&amp;hl=en_IN" rel="noopener noreferrer" target="_blank">Try Folder Lock Free →</a>
+<a class="btn btn-outline" href="https://store.newsoftwares.net/?add=fl" rel="noopener noreferrer" target="_blank">Get the full version →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="footer-grid">
+<div class="footer-col">
+<div class="site-name" style="color: var(--color-white); margin-bottom: 1rem; display: flex; align-items: center;">
+<span aria-label="Security-themed shield and lock graphic" class="custom-security-mark" role="img">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="shieldGlow" x1="8" x2="56" y1="6" y2="58">
+<stop offset="0" stop-color="#58A6FF"></stop>
+<stop offset="0.52" stop-color="#3FB950"></stop>
+<stop offset="1" stop-color="#0D1117"></stop>
+</lineargradient>
+<filter height="180%" id="softGlow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="blur" stddeviation="2.4"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<rect fill="#0D1117" height="60" rx="14" width="60" x="2" y="2"></rect>
+<path d="M32 8L50 15V29C50 43 41.8 53.2 32 57C22.2 53.2 14 43 14 29V15L32 8Z" fill="url(#shieldGlow)" filter="url(#softGlow)" opacity="0.95"></path>
+<path d="M32 13.2L45.5 18.5V29.3C45.5 39.7 39.6 47.2 32 50.8C24.4 47.2 18.5 39.7 18.5 29.3V18.5L32 13.2Z" fill="#101821" stroke="#C9D1D9" stroke-opacity="0.22"></path>
+<path d="M25 30V26.6C25 22.7 28.1 19.6 32 19.6C35.9 19.6 39 22.7 39 26.6V30" fill="none" stroke="#3FB950" stroke-linecap="round" stroke-width="3"></path>
+<rect fill="#0D1117" height="15" rx="4" stroke="#58A6FF" stroke-width="2" width="18" x="23" y="29"></rect>
+<circle cx="32" cy="36" fill="#3FB950" r="2"></circle>
+<path d="M32 38V41" stroke="#3FB950" stroke-linecap="round" stroke-width="2"></path>
+<path d="M12 44H20M44 20H52M11 24H17M47 42H55" stroke="#58A6FF" stroke-linecap="round" stroke-opacity="0.55" stroke-width="2"></path>
+</svg>
+</span>
+          <span class="brand-title">AndroidFolderPrivacy</span>
+        </div>
+<p style="color: #a0aca5; font-size: 0.9rem; line-height: 1.6; padding-right: 20px;">
+          Dedicated to helping users secure their mobile data through independent analysis of built-in OS tools and third-party privacy software.
+        </p>
+</div>
+<div class="footer-col">
+<h4>Navigation</h4>
+<ul class="footer-links">
+<li><a href="#methods">Native Methods</a></li>
+<li><a href="#features">App Features</a></li>
+<li><a href="#comparison">Comparisons</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Legal &amp; Policy</h4>
+<ul class="footer-links">
+<li><a href="#">Privacy Policy</a></li>
+<li><a href="#">Terms of Use</a></li>
+<li><a href="#">Editorial Policy</a></li>
+<li><a href="#">Contact Support</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>This site operates as an independent editorial resource. Some links may earn a referral commission at no cost to you. Product recommendations reflect editorial judgment and independent assessment.</p>
+<p>Folder Lock is developed by <a href="https://newsoftwares.net/" rel="noopener noreferrer" style="color: #a0aca5; text-decoration: underline;" target="_blank">NewSoftwares.net</a>.</p>
+<p>© 2026 AndroidFolderPrivacy. All rights reserved.</p>
+</div>
+</footer>
+<!-- Scripts -->
+<script defer="">
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('.site-header');
+      const nav = document.querySelector('.nav-links');
+
+      window.addEventListener('scroll', () => {
+        const shadow = window.scrollY > 50 ? '0 8px 28px rgba(0,0,0,0.32)' : 'none';
+        if (header) header.style.boxShadow = shadow;
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+        const progressBar = document.getElementById("progress-bar");
+        if (progressBar) progressBar.style.width = scrolled + "%";
+      });
+
+      const toggle = document.querySelector('.menu-toggle');
+      if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+          nav.classList.toggle('active');
+        });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const selector = this.getAttribute('href');
+          if (!selector || selector === '#') return;
+          e.preventDefault();
+          const target = document.querySelector(selector);
+          if (target) {
+            if (nav && nav.classList.contains('active')) nav.classList.remove('active');
+            window.scrollTo({
+              top: target.offsetTop - 82,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      const accordions = document.querySelectorAll('.accordion-btn');
+      accordions.forEach(acc => {
+        acc.addEventListener('click', function() {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !expanded);
+          const panel = this.nextElementSibling;
+          if (!expanded) {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          } else {
+            panel.style.maxHeight = null;
+          }
+        });
+      });
+
+      const intentBtns = document.querySelectorAll('.intent-btn');
+      const intentContents = document.querySelectorAll('.intent-content');
+      intentBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          intentBtns.forEach(b => b.classList.remove('active'));
+          intentContents.forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.classList.add('active');
+        });
+      });
+
+      const auditItems = document.querySelectorAll('.audit-item');
+      const auditProgress = document.querySelector('.audit-progress');
+      function updateAudit() {
+        let checked = 0;
+        auditItems.forEach(item => {
+          const input = item.querySelector('input');
+          if (input && input.checked) {
+            checked++;
+            item.classList.add('checked');
+          } else {
+            item.classList.remove('checked');
+          }
+        });
+        if (auditProgress) auditProgress.textContent = `Privacy Score: ${checked}/${auditItems.length} Completed`;
+      }
+      auditItems.forEach(item => {
+        const input = item.querySelector('input');
+        if (input) input.addEventListener('change', updateAudit);
+      });
+      updateAudit();
+
+      const terminal = document.getElementById('hero-terminal-output');
+      const commands = [
+        `$ folderlock --scan /Android/Private\nscanning 42 files...\nstatus: sensitive files detected\nnext: create secure vault`,
+        `$ folderlock --encrypt "financial-documents"\nkey strength: AES-256\nmoving files to protected space\noutput: vault/financial-documents.locked`,
+        `$ folderlock --verify --app-lock\nchecking gallery access... blocked\nchecking cloud sync... encrypted\nresult: protection active`
+      ];
+
+      if (terminal) {
+        let commandIndex = 0;
+        let charIndex = 0;
+        function typeTerminal() {
+          const text = commands[commandIndex];
+          terminal.innerHTML = text.slice(0, charIndex).replace(/\n/g, '<br>') + '<span class="cursor"></span>';
+          charIndex++;
+          if (charIndex <= text.length) {
+            setTimeout(typeTerminal, 32);
+          } else {
+            setTimeout(() => {
+              charIndex = 0;
+              commandIndex = (commandIndex + 1) % commands.length;
+              typeTerminal();
+            }, 8000);
+          }
+        }
+        typeTerminal();
+      }
+
+      const counter = document.getElementById('files-counter');
+      if (counter) {
+        let count = parseInt(counter.textContent.replace(/\D/g, ''), 10) || 184920;
+        setInterval(() => {
+          count += Math.floor(Math.random() * 3) + 1;
+          counter.textContent = count.toLocaleString();
+        }, 1800);
+      }
+
+      const sections = document.querySelectorAll('section');
+      if ('IntersectionObserver' in window) {
+        const loaderObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-loading');
+              setTimeout(() => entry.target.classList.remove('is-loading'), 1300);
+            }
+          });
+        }, { threshold: 0.28 });
+        sections.forEach(section => loaderObserver.observe(section));
+      }
+
+      document.querySelectorAll('.faq-item h4').forEach(question => {
+        const toggleFaq = () => {
+          const item = question.closest('.faq-item');
+          const isOpen = item.classList.toggle('open');
+          question.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+        question.addEventListener('click', toggleFaq);
+        question.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFaq();
+          }
+        });
+      });
+    });
+
+</script>
+<!-- Schema Markup -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "How to Lock a Folder on Android Without App",
+    "description": "A complete guide on how to lock a folder on Android. Learn native methods, Secure Folder, and the best third-party folder lock apps for complete privacy."
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Lock a Folder on Android Without App",
+    "author": {
+      "@type": "Organization",
+      "name": "AndroidFolderPrivacy Editorial Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NewSoftwares.net"
+    },
+    "datePublished": "2026-05-22"
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can you lock a folder on Android without an app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. You can use the 'Safe folder' feature within the pre-installed Files by Google app, or the 'Secure Folder' feature built into Samsung Galaxy devices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Secure Folder different from folder lock on Android?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Samsung's Secure Folder is a hardware-backed encrypted environment that acts like a separate phone partition. A standard folder lock generally just encrypts and hides specific files within your existing file system."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I lock a folder on Android SD card?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Native tools struggle with external SD cards. To reliably lock a folder in an SD card in Android so that it remains encrypted even if removed, you should use dedicated third-party folder lock software."
+        }
+      }
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Lock a Folder on Android using Files by Google",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Open Files App",
+        "text": "Open the Files by Google app on your Android device."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Navigate to Safe Folder",
+        "text": "Scroll down to the Collections section and tap Safe folder."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Set PIN or Pattern",
+        "text": "Choose either a PIN or Pattern lock and confirm it."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Move Files",
+        "text": "Navigate to any file, tap the three dots next to it, and select Move to Safe folder."
+      }
+    ]
+  }
+  </script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Privacy Guides"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Android"
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
