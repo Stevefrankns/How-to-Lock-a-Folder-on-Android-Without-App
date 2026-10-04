@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://how-to-lock-a-folder-on-android-wit.vercel.app/sitemap.xml
